@@ -1,0 +1,14 @@
+name: Build and run C++ app
+
+on:
+ push:
+  branches: [ master ]
+
+jobs:
+ docker:
+  runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v2
+  - name: Build and run Docker container
+    run: |
+     docker-compose --build
