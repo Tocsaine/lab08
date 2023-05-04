@@ -8,11 +8,12 @@ services:
      - my-network
   client:
     build: ./client
-    ports:
-     - "8080:8080"
-#    depends_on:
-#     - server
+    environment:
+     - PASSWORD=${VALUE}
+    depends_on:
+     - server
     networks:
      - my-network
 networks:
+  
   my-network:

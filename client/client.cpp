@@ -4,9 +4,11 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <fstream>
+#include <cstdlib>
 
-const char* IP = "172.18.0.2";
-const int PORT = 8080;
+const char* IP = "172.17.0.2";
+const int PORT = 80;
 
 int main() {
     // Создаем сокет
@@ -28,12 +30,17 @@ int main() {
         close(client_socket);
         return 1;
     }
-
-    std::cout << "Connected to server on port 5000\n";
+    connect(client_socket, (sockaddr*)&server_address, sizeof(server_address));
+    std::cout << "Connected to server on port 80\n";
+    
+    std::string message;
+    message = std::getenv("PASSWORD");
+    std::cout << "Sending message... ... " << message;
 
     // Отправляем сообщение серверу
-    std::string message = "Hello from client!";
-    int bytes_sent = send(client_socket, message.c_str(), message.size(), 0);
+    //std::string message = "Hello from client!";
+    const char* pass = message.c_str();
+    int bytes_sent = send(client_socket, pass, strlen(pass), 0);
     if (bytes_sent == -1) {
         std::cerr << "Error: socket send failed\n";
         close(client_socket);

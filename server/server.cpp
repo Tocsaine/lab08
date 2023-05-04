@@ -16,7 +16,7 @@ int main() {
     }
 
     // Настраиваем адрес сервера
-    sockaddr_in server_address {};
+    sockaddr_in server_address;
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = INADDR_ANY;
     server_address.sin_port = htons(PORT); // Произвольный порт
@@ -35,7 +35,7 @@ int main() {
         return 1;
     }
 
-    std::cout << "Server is running on port 5000\n";
+    std::cout << "Server is running on port 80\n";
 
     // Принимаем входящее соединение
     sockaddr_in client_address {};
@@ -62,7 +62,13 @@ int main() {
     std::cout << "Received message: " << buffer << "\n";
 
     // Отправляем ответ клиенту
-    std::string message = "Hello from server!";
+    std::string message;
+    if (buffer == "666"){
+        message = "Correct";
+    } else {
+        message = "Incorrect";
+    }
+    //std::string message = "Hello from server!";
     int bytes_sent = send(client_socket, message.c_str(), message.size(), 0);
     if (bytes_sent == -1) {
         std::cerr << "Error: socket send failed\n";
