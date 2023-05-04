@@ -11,4 +11,4 @@ jobs:
   - uses: actions/checkout@v2
   - name: Build and run Docker container
     run: |
-     docker-compose --build
+     sudo docker-compose up
